@@ -1,11 +1,7 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
 using System.ComponentModel;
 using System.Windows.Forms;
 using System.Text.RegularExpressions;
-using System.Drawing;
 using Halloumi.Common.Windows.Helpers;
 
 namespace Halloumi.Common.Windows.Controls
@@ -151,7 +147,7 @@ namespace Halloumi.Common.Windows.Controls
         /// <returns>Returns true if the textbox is valid</returns>
         public bool IsValid()
         {
-            bool isValid = true;
+            var isValid = true;
 
             if (this.IsRequired && this.Text == "")
             {
@@ -167,8 +163,8 @@ namespace Halloumi.Common.Windows.Controls
             {
                 // if not valid int, or less than minvalue, 
                 // or more than maxvalue, is not valid
-                int intValue = 0;
-                bool validInt = int.TryParse(this.Text, out intValue);
+                var intValue = 0;
+                var validInt = int.TryParse(this.Text, out intValue);
                 if (!validInt
                     || intValue < (int)(this.MinimumValue)
                     || intValue > (int)(this.MaximumValue))
@@ -181,7 +177,7 @@ namespace Halloumi.Common.Windows.Controls
                 // if not valid double, or less than minvalue, 
                 // or more than maxvalue, is not valid
                 double doubleValue = 0;
-                bool validDouble = double.TryParse(this.Text, out doubleValue);
+                var validDouble = double.TryParse(this.Text, out doubleValue);
                 if (!validDouble
                     || doubleValue < this.MinimumValue
                     || doubleValue > this.MaximumValue)
@@ -192,14 +188,14 @@ namespace Halloumi.Common.Windows.Controls
             // validate the contents of the textbox using the regular expression provided
             if (this.RegularExpression != string.Empty)
             {
-                Regex regex = new Regex(this.RegularExpression);
+                var regex = new Regex(this.RegularExpression);
                 isValid = regex.IsMatch(this.Text);
             }
 
             // if control is valid so far, raise custom validate event
             if (CustomValidate != null && isValid)
             {
-                CancelEventArgs cancelEventArgs = new CancelEventArgs(false);
+                var cancelEventArgs = new CancelEventArgs(false);
                 CustomValidate(this, cancelEventArgs);
                 isValid = !cancelEventArgs.Cancel;
             }
@@ -243,7 +239,7 @@ namespace Halloumi.Common.Windows.Controls
             if (this.EntryType == TextEntryType.Integer)
             {
                 // if entry mode is integer, filter out non-numeric chars
-                string filteredText = Regex.Replace(this.Text, "[^0-9]", "");
+                var filteredText = Regex.Replace(this.Text, "[^0-9]", "");
                 if (filteredText != this.Text)
                 {
                     this.Text = filteredText;
@@ -252,7 +248,7 @@ namespace Halloumi.Common.Windows.Controls
             else if (this.EntryType == TextEntryType.Number)
             {
                 // if entry mode is double, filter invalid chars
-                string filteredText = Regex.Replace(this.Text, "[^-.0-9]", "");
+                var filteredText = Regex.Replace(this.Text, "[^-.0-9]", "");
                 if (filteredText != this.Text)
                 {
                     this.Text = filteredText;

@@ -5,7 +5,6 @@ using System.Drawing.Drawing2D;
 using System.Drawing.Imaging;
 using System.IO;
 using System.Linq;
-using System.Text;
 
 namespace Halloumi.Common.Windows.Helpers
 {
@@ -21,14 +20,14 @@ namespace Halloumi.Common.Windows.Helpers
         /// <returns>A new image, with dimesions specified in 'size'</returns>
         public static Image Resize(Image image, Size size)
         {
-            Bitmap bitmap = new Bitmap(size.Width, size.Height);
-            using (Graphics graphics = Graphics.FromImage((Image)bitmap))
+            var bitmap = new Bitmap(size.Width, size.Height);
+            using (var graphics = Graphics.FromImage(bitmap))
             {
                 graphics.InterpolationMode = InterpolationMode.HighQualityBicubic;
                 graphics.DrawImage(image, 0, 0, size.Width, size.Height);
                 graphics.Dispose();
             }
-            return (Image)bitmap;
+            return bitmap;
         }
 
         /// <summary>
@@ -38,13 +37,13 @@ namespace Halloumi.Common.Windows.Helpers
         /// <returns>A new image that is an cioy of the original</returns>
         public static Image Copy(Image image)
         {
-            Bitmap bitmap = new Bitmap(image.Width, image.Height);
-            using (Graphics graphics = Graphics.FromImage((Image)bitmap))
+            var bitmap = new Bitmap(image.Width, image.Height);
+            using (var graphics = Graphics.FromImage(bitmap))
             {
                 graphics.DrawImage(image, 0, 0, image.Width, image.Height);
                 graphics.Dispose();
             }
-            return (Image)bitmap;
+            return bitmap;
         }
 
         /// <summary>
@@ -55,8 +54,8 @@ namespace Halloumi.Common.Windows.Helpers
         /// <returns>A new image that fits within the dimesions specifed in 'size'</returns>
         public static Image ScaleImageToFit(Image image, Size size)
         {
-            double ratioW = ((double)size.Width / (double)image.Width);
-            double ratioH = ((double)size.Height / (double)image.Height);
+            var ratioW = (size.Width / (double)image.Width);
+            var ratioH = (size.Height / (double)image.Height);
 
             double ratio = 0;
             if (ratioH < ratioW)
@@ -68,7 +67,7 @@ namespace Halloumi.Common.Windows.Helpers
                 ratio = ratioW;
             }
 
-            Size newSize = new Size(0, 0);
+            var newSize = new Size(0, 0);
             newSize.Width = (int)(image.Width * ratio);
             newSize.Height = (int)(image.Height * ratio);
 
@@ -83,8 +82,8 @@ namespace Halloumi.Common.Windows.Helpers
         /// <returns>A new image that is at least the dimesions specifed in 'size'</returns>
         public static Image ScaleImageToFill(Image image, Size size)
         {
-            double ratioW = ((double)size.Width / (double)image.Width);
-            double ratioH = ((double)size.Height / (double)image.Height);
+            var ratioW = (size.Width / (double)image.Width);
+            var ratioH = (size.Height / (double)image.Height);
 
             double ratio = 0;
             if (ratioH > ratioW)
@@ -96,7 +95,7 @@ namespace Halloumi.Common.Windows.Helpers
                 ratio = ratioW;
             }
 
-            Size newSize = new Size(0, 0);
+            var newSize = new Size(0, 0);
             newSize.Width = (int)Math.Round(image.Width * ratio, 0);
             newSize.Height = (int)Math.Round(image.Height * ratio, 0);
 
@@ -111,9 +110,9 @@ namespace Halloumi.Common.Windows.Helpers
         /// <returns>A new scaled croped image the fits exactly the dimesions specifed in 'size'</returns>
         public static Image ScaleAndCropImageToFit(Image image, Size size)
         {
-            using (Image resizedImage = ScaleImageToFill(image, size))
+            using (var resizedImage = ScaleImageToFill(image, size))
             {
-                Rectangle cropArea = CalculateCenteredCropArea(resizedImage, size);
+                var cropArea = CalculateCenteredCropArea(resizedImage, size);
                 return Crop(resizedImage, cropArea);
             }
         }
@@ -137,10 +136,10 @@ namespace Halloumi.Common.Windows.Helpers
                 cropArea.Width = image.Width;
             }
 
-            using (Bitmap bitmap = new Bitmap(image))
+            using (var bitmap = new Bitmap(image))
             {
-                Bitmap croppedBitmap = bitmap.Clone(cropArea, image.PixelFormat);
-                return (Image)(croppedBitmap);
+                var croppedBitmap = bitmap.Clone(cropArea, image.PixelFormat);
+                return croppedBitmap;
             }
         }
 
@@ -152,7 +151,7 @@ namespace Halloumi.Common.Windows.Helpers
         /// <returns>The crop area of the original image</returns>
         private static Rectangle CalculateCenteredCropArea(Image image, Size cropSize)
         {
-            Rectangle cropArea = new Rectangle(0, 0, cropSize.Width, cropSize.Height);
+            var cropArea = new Rectangle(0, 0, cropSize.Width, cropSize.Height);
 
             if (image.Height != cropSize.Height)
             {
@@ -175,31 +174,31 @@ namespace Halloumi.Common.Windows.Helpers
         /// <returns>The filtered median</returns>
         public static Image MedianFilter(Image image, int size)
         {
-            Bitmap sourceBitmap = new Bitmap(image);
-            Bitmap medianBitmap = new Bitmap(image.Width, image.Height);
+            var sourceBitmap = new Bitmap(image);
+            var medianBitmap = new Bitmap(image.Width, image.Height);
 
             var medianFastBitmap = new BitmapAccessor(medianBitmap);
             var sourceFastBitmap = new BitmapAccessor(sourceBitmap);
 
-            int apetureMin = -(size / 2);
-            int apetureMax = (size / 2);
+            var apetureMin = -(size / 2);
+            var apetureMax = (size / 2);
 
-            List<int> rValues = new List<int>();
-            List<int> gValues = new List<int>();
-            List<int> bValues = new List<int>();
+            var rValues = new List<int>();
+            var gValues = new List<int>();
+            var bValues = new List<int>();
 
             Color medianColor;
             Color currentColor;
 
-            for (int x = 0; x < medianBitmap.Width; x++)
+            for (var x = 0; x < medianBitmap.Width; x++)
             {
-                for (int y = 0; y < medianBitmap.Height; y++)
+                for (var y = 0; y < medianBitmap.Height; y++)
                 {
-                    for (int currentX = x + apetureMin; currentX < x + apetureMax; currentX++)
+                    for (var currentX = x + apetureMin; currentX < x + apetureMax; currentX++)
                     {
                         if (currentX >= 0 && currentX < medianBitmap.Width)
                         {
-                            for (int currentY = y + apetureMin; currentY < y + apetureMax; currentY++)
+                            for (var currentY = y + apetureMin; currentY < y + apetureMax; currentY++)
                             {
                                 if (currentY >= 0 && currentY < medianBitmap.Height)
                                 {
@@ -232,7 +231,7 @@ namespace Halloumi.Common.Windows.Helpers
             sourceFastBitmap.Dispose();
             sourceBitmap.Dispose();
 
-            return (Image)medianBitmap;
+            return medianBitmap;
         }
 
         /// <summary>
@@ -258,36 +257,36 @@ namespace Halloumi.Common.Windows.Helpers
         /// <returns>The filtered median</returns>
         public static Image BlurFilter(Image image, int size)
         {
-            Bitmap sourceBitmap = new Bitmap(image);
-            Bitmap medianBitmap = new Bitmap(image.Width, image.Height);
+            var sourceBitmap = new Bitmap(image);
+            var medianBitmap = new Bitmap(image.Width, image.Height);
 
-            int apetureMin = -(size / 2);
-            int apetureMax = (size / 2);
+            var apetureMin = -(size / 2);
+            var apetureMax = (size / 2);
 
             Color medianColor;
             Color currentColor;
-            int rValue = 0;
-            int gValue = 0;
-            int bValue = 0;
-            int pixelCount = 0;
+            var rValue = 0;
+            var gValue = 0;
+            var bValue = 0;
+            var pixelCount = 0;
 
             var medianFastBitmap = new BitmapAccessor(medianBitmap);
             var sourceFastBitmap = new BitmapAccessor(sourceBitmap);
 
-            for (int x = 0; x < medianBitmap.Width; x++)
+            for (var x = 0; x < medianBitmap.Width; x++)
             {
-                for (int y = 0; y < medianBitmap.Height; y++)
+                for (var y = 0; y < medianBitmap.Height; y++)
                 {
                     rValue = 0;
                     gValue = 0;
                     bValue = 0;
                     pixelCount = 0;
 
-                    for (int currentX = x + apetureMin; currentX < x + apetureMax; currentX++)
+                    for (var currentX = x + apetureMin; currentX < x + apetureMax; currentX++)
                     {
                         if (currentX >= 0 && currentX < medianBitmap.Width)
                         {
-                            for (int currentY = y + apetureMin; currentY < y + apetureMax; currentY++)
+                            for (var currentY = y + apetureMin; currentY < y + apetureMax; currentY++)
                             {
                                 if (currentY >= 0 && currentY < medianBitmap.Height)
                                 {
@@ -313,7 +312,7 @@ namespace Halloumi.Common.Windows.Helpers
             sourceFastBitmap.Dispose();
             sourceBitmap.Dispose();
 
-            return (Image)medianBitmap;
+            return medianBitmap;
         }
 
         /// <summary>
@@ -325,12 +324,12 @@ namespace Halloumi.Common.Windows.Helpers
         /// <returns>An image of the reflection. (Just the reflection, not the original image)</returns>
         public static Image GlassTableTopReflection(Image image, int height, Color backgroundColor)
         {
-            using (Bitmap sourceBitmap = new Bitmap(image))
-            using (Bitmap destinationBitmap = new Bitmap(image.Width, height))
-            using (Graphics graphics = Graphics.FromImage(destinationBitmap))
+            using (var sourceBitmap = new Bitmap(image))
+            using (var destinationBitmap = new Bitmap(image.Width, height))
+            using (var graphics = Graphics.FromImage(destinationBitmap))
             {
                 // fill with background color
-                Rectangle bounds = new Rectangle(0, 0, image.Width, height);
+                var bounds = new Rectangle(0, 0, image.Width, height);
                 graphics.FillRectangle(new SolidBrush(backgroundColor), bounds);
 
                 // flip source
@@ -344,7 +343,7 @@ namespace Halloumi.Common.Windows.Helpers
                 graphics.FillRectangle(brush, bounds);
 
                 // blur and return result
-                return BlurFilter((Image)destinationBitmap, 2);
+                return BlurFilter(destinationBitmap, 2);
             }
         }
 
@@ -393,6 +392,39 @@ namespace Halloumi.Common.Windows.Helpers
             SaveJpg(stream, image, 95);
         }
 
+        public static Image DarkenImage(Image image, double darkenAmount)
+        {
+            var sourceBitmap = new Bitmap(image);
+            var darkenBitmap = new Bitmap(image.Width, image.Height);
+
+            var darkenFastBitmap = new BitmapAccessor(darkenBitmap);
+            var sourceFastBitmap = new BitmapAccessor(sourceBitmap);
+
+            for (var x = 0; x < darkenBitmap.Width; x++)
+            {
+                for (var y = 0; y < darkenBitmap.Height; y++)
+                {
+                    var color = sourceFastBitmap.GetPixel(x, y);
+                    darkenFastBitmap.SetPixel(x, y, DarkenColor(color, darkenAmount));
+                }
+            }
+
+            darkenFastBitmap.Dispose();
+            sourceFastBitmap.Dispose();
+            sourceBitmap.Dispose();
+
+            return darkenBitmap;
+        }
+
+        public static Color DarkenColor(Color inColor, double darkenAmount)
+        {
+            return Color.FromArgb(
+                inColor.A,
+                (int)Math.Max(0, inColor.R - 255 * darkenAmount),
+                (int)Math.Max(0, inColor.G - 255 * darkenAmount),
+                (int)Math.Max(0, inColor.B - 255 * darkenAmount));
+        }
+
         /// <summary>
         /// Gets the JPG quality encoder parameters.
         /// </summary>
@@ -404,7 +436,7 @@ namespace Halloumi.Common.Windows.Helpers
             // ensure the quality is within the correct range
             if (quality < 0 || quality > 100)
             {
-                string error = string.Format("Jpeg image quality must be between 0 and 100, with 100 being the highest quality.  A value of {0} was specified.", quality);
+                var error = string.Format("Jpeg image quality must be between 0 and 100, with 100 being the highest quality.  A value of {0} was specified.", quality);
                 throw new ArgumentOutOfRangeException(error);
             }
 
@@ -439,7 +471,7 @@ namespace Halloumi.Common.Windows.Helpers
         /// <param name="y">The y position to draw to.</param>
         private static void DrawTransparentImage(Graphics graphics, Bitmap bitmap, float opacity, int x, int y)
         {
-            Rectangle bounds = new Rectangle(x, y, bitmap.Width, bitmap.Height);
+            var bounds = new Rectangle(x, y, bitmap.Width, bitmap.Height);
 
             float[][] matrixItems =
             {
@@ -449,7 +481,7 @@ namespace Halloumi.Common.Windows.Helpers
                 new float[] {0, 0, 0, opacity, 0},
                 new float[] {0, 0, 0, 0, 1}
             };
-            ColorMatrix colorMatrix = new ColorMatrix(matrixItems);
+            var colorMatrix = new ColorMatrix(matrixItems);
             var imageAttributes = new ImageAttributes();
             imageAttributes.SetColorMatrix(colorMatrix, ColorMatrixFlag.Default, ColorAdjustType.Bitmap);
 
@@ -479,12 +511,12 @@ namespace Halloumi.Common.Windows.Helpers
             {
                 _bitmap = bitmpap;
 
-                Rectangle bounds = new Rectangle(Point.Empty, _bitmap.Size);
+                var bounds = new Rectangle(Point.Empty, _bitmap.Size);
 
                 _bitmapData = _bitmap.LockBits(bounds, ImageLockMode.ReadWrite, _bitmap.PixelFormat);
                 _bitmapPointer = _bitmapData.Scan0;
 
-                int bytes = (_bitmap.Width * _bitmap.Height) * 4;
+                var bytes = (_bitmap.Width * _bitmap.Height) * 4;
                 _rgbValues = new byte[bytes];
                 System.Runtime.InteropServices.Marshal.Copy(_bitmapPointer, _rgbValues, 0, _rgbValues.Length);
             }
@@ -497,7 +529,7 @@ namespace Halloumi.Common.Windows.Helpers
             /// <returns>The colour of pixel at the specified location</returns>
             public Color GetPixel(int x, int y)
             {
-                int index = ((y * _bitmap.Width + x) * 4);
+                var index = ((y * _bitmap.Width + x) * 4);
                 int b = _rgbValues[index];
                 int g = _rgbValues[index + 1];
                 int r = _rgbValues[index + 2];
@@ -514,7 +546,7 @@ namespace Halloumi.Common.Windows.Helpers
             /// <param name="colour">The colour.</param>
             public void SetPixel(int x, int y, Color colour)
             {
-                int index = ((y * _bitmap.Width + x) * 4);
+                var index = ((y * _bitmap.Width + x) * 4);
                 _rgbValues[index] = colour.B;
                 _rgbValues[index + 1] = colour.G;
                 _rgbValues[index + 2] = colour.R;

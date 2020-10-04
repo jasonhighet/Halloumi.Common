@@ -1,9 +1,5 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.ComponentModel;
-using System.Diagnostics;
-using System.Linq;
-using System.Text;
 using System.Windows.Forms;
 using ComponentFactory.Krypton.Toolkit;
 
@@ -45,8 +41,8 @@ namespace Halloumi.Common.Windows.Contollers
 
         private void Initialize()
         {
-            int itemCount = contextMenu.Items.Count;
-            for (int i = 0; i < itemCount; i++)
+            var itemCount = contextMenu.Items.Count;
+            for (var i = 0; i < itemCount; i++)
             {
                 contextMenu.Items[i].Click += new EventHandler(ColorTheme_Click);
             }
@@ -72,8 +68,8 @@ namespace Halloumi.Common.Windows.Contollers
                 _themeMenu = value;
                 if (_themeMenu != null)
                 {
-                    int itemCount = contextMenu.Items.Count;
-                    for (int i = 0; i < itemCount; i++)
+                    var itemCount = contextMenu.Items.Count;
+                    for (var i = 0; i < itemCount; i++)
                     {
                         _themeMenu.DropDownItems.Insert(i, contextMenu.Items[0]);
                     }

@@ -1,14 +1,6 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.Data;
 using System.Drawing;
-using System.Linq;
-using System.Text;
 using System.Windows.Forms;
-using System.Reflection;
-using System.IO;
-using Halloumi.Common.Windows.Helpers;
 using Halloumi.Common.Helpers;
 
 namespace Halloumi.Common.Windows.Forms
@@ -56,8 +48,8 @@ namespace Halloumi.Common.Windows.Forms
         /// <returns>The application version details</returns>
         public static string GetVersionDetails()
         {
-            string versionNumber = ApplicationHelper.GetVersionNumber();
-            string compileDate = ApplicationHelper.GetCompilationDate().ToShortDateString();
+            var versionNumber = ApplicationHelper.GetVersionNumber();
+            var compileDate = ApplicationHelper.GetCompilationDate().ToShortDateString();
             return "Version " + versionNumber + " (" + compileDate + ")";
         }
 
@@ -68,9 +60,9 @@ namespace Halloumi.Common.Windows.Forms
         {
             try
             {
-                string path = string.Empty;
+                var path = string.Empty;
                 object value = null;
-                Microsoft.Win32.RegistryKey key = Microsoft.Win32.Registry.LocalMachine;
+                var key = Microsoft.Win32.Registry.LocalMachine;
 
                 // attempt to find path to MSInfo in registry
                 key = key.OpenSubKey("Software\\Microsoft\\Shared Tools\\MSInfo");
@@ -98,7 +90,7 @@ namespace Halloumi.Common.Windows.Forms
                 // if path found, verifiy exists
                 if (path != string.Empty)
                 {
-                    System.IO.FileInfo info = new System.IO.FileInfo(path);
+                    var info = new System.IO.FileInfo(path);
                     if (info.Exists)
                     {
                         // if exists, run
@@ -115,24 +107,24 @@ namespace Halloumi.Common.Windows.Forms
         /// </summary>
         private void DisplayScreenEffects()
         {
-            int screenWidth = Screen.GetBounds(new Point(0, 0)).Width;
-            int screenHeight = Screen.GetBounds(new Point(0, 0)).Height;
+            var screenWidth = Screen.GetBounds(new Point(0, 0)).Width;
+            var screenHeight = Screen.GetBounds(new Point(0, 0)).Height;
 
-            Bitmap screenShot = new Bitmap(screenWidth, screenHeight);
-            Graphics graphics = Graphics.FromImage((Image)screenShot);
+            var screenShot = new Bitmap(screenWidth, screenHeight);
+            var graphics = Graphics.FromImage(screenShot);
             graphics.CopyFromScreen(0, 0, 0, 0, new Size(screenWidth, screenHeight));
 
-            EffectsForm effectsForm = new EffectsForm();
+            var effectsForm = new EffectsForm();
             graphics = effectsForm.CreateGraphics();
 
-            int x = 0;
-            int y = 0;
-            int width = screenWidth;
-            int height = screenHeight;
+            var x = 0;
+            var y = 0;
+            var width = screenWidth;
+            var height = screenHeight;
 
             while (width >= 0)
             {
-                graphics.DrawImage((Image)screenShot, x, y, width, height);
+                graphics.DrawImage(screenShot, x, y, width, height);
                 x++;
                 y++;
                 width -= 2;
@@ -141,7 +133,7 @@ namespace Halloumi.Common.Windows.Forms
 
             while (width <= screenWidth)
             {
-                graphics.DrawImage((Image)screenShot, x, y, width, height);
+                graphics.DrawImage(screenShot, x, y, width, height);
                 x--;
                 y--;
                 width += 2;

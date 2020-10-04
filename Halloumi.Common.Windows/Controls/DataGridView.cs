@@ -3,9 +3,7 @@ using System.Collections.Generic;
 using System.ComponentModel;
 using System.Drawing;
 using System.Linq;
-using System.Text;
 using System.Windows.Forms;
-using ComponentFactory.Krypton.Toolkit;
 using Halloumi.Common.Helpers;
 
 namespace Halloumi.Common.Windows.Controls
@@ -309,7 +307,7 @@ namespace Halloumi.Common.Windows.Controls
         /// <param name="graphics">The graphics object</param>
         private void DrawMergeRow(int row, Graphics graphics)
         {
-            Rectangle rowRectangle = this.GetRowDisplayRectangle(row, true);
+            var rowRectangle = this.GetRowDisplayRectangle(row, true);
 
             if (rowRectangle.Y == 0) return;
 
@@ -317,7 +315,7 @@ namespace Halloumi.Common.Windows.Controls
             rowRectangle.X--;
             rowRectangle.Y--;
 
-            StringFormat format = new StringFormat();
+            var format = new StringFormat();
             format.Alignment = StringAlignment.Near;
             format.LineAlignment = StringAlignment.Center;
 
@@ -339,7 +337,7 @@ namespace Halloumi.Common.Windows.Controls
             base.OnPaint(e);
 
             // draw all merged cells.
-            foreach (int row in _mergeRows)
+            foreach (var row in _mergeRows)
             {
                 DrawMergeRow(row, e.Graphics);
             }

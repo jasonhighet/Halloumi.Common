@@ -1,9 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-
-namespace Halloumi.Common.Helpers
+﻿namespace Halloumi.Common.Helpers
 {
     public static class ConversionHelper
     {
@@ -17,7 +12,7 @@ namespace Halloumi.Common.Helpers
         /// </returns>
         public static int ToInt(object value, int defaultValue)
         {
-            int result = defaultValue;
+            var result = defaultValue;
             int.TryParse(value.ToString(), out result);
             return result;
         }
@@ -44,7 +39,7 @@ namespace Halloumi.Common.Helpers
         /// </returns>
         public static decimal ToDecimal(object value, decimal defaultValue)
         {
-            decimal result = defaultValue;
+            var result = defaultValue;
             decimal.TryParse(value.ToString(), out result);
             return result;
         }
@@ -71,7 +66,7 @@ namespace Halloumi.Common.Helpers
         /// </returns>
         public static double ToDouble(object value, double defaultValue)
         {
-            double result = defaultValue;
+            var result = defaultValue;
             double.TryParse(value.ToString(), out result);
             return result;
         }
@@ -98,7 +93,7 @@ namespace Halloumi.Common.Helpers
         /// </returns>
         public static float ToFloat(object value, float defaultValue)
         {
-            float result = defaultValue;
+            var result = defaultValue;
             float.TryParse(value.ToString(), out result);
             return result;
         }
@@ -126,7 +121,7 @@ namespace Halloumi.Common.Helpers
         /// </returns>
         public static bool ToBoolean(object value, bool defaultValue)
         {
-            bool result = defaultValue;
+            var result = defaultValue;
             var text = value.ToString().ToLower().Trim();
             if (text == "1" || text == "true" || text == "yes") return true;
             if (text == "0" || text == "false" || text == "no") return false;
@@ -158,7 +153,7 @@ namespace Halloumi.Common.Helpers
         /// </returns>
         public static long ToLong(object value, long defaultValue)
         {
-            long result = defaultValue;
+            var result = defaultValue;
             long.TryParse(value.ToString(), out result);
             return result;
         }

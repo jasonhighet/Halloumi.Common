@@ -1,7 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
 using System.Data;
 using System.Data.SqlClient;
 using System.Configuration;
@@ -71,7 +69,7 @@ namespace Halloumi.Common.Helpers
         /// <returns>The specified connection string</returns>
         public static string GetConnectionString(string name)
         {
-            string connectionString = "";
+            var connectionString = "";
 
             if (_connectionStrings.ContainsKey(name))
             {
@@ -99,7 +97,7 @@ namespace Halloumi.Common.Helpers
         public static SqlDataReader ExecuteReader(SqlConnection connection, string name, SqlParameter[] parameters)
         {
             connection.Open();
-            SqlCommand command = CreateCommand(name, CommandType.StoredProcedure, parameters, connection);
+            var command = CreateCommand(name, CommandType.StoredProcedure, parameters, connection);
             return command.ExecuteReader();
         }
 
@@ -128,11 +126,11 @@ namespace Halloumi.Common.Helpers
         public static DataSet ExecuteDataSet(SqlConnection connection, string name, SqlParameter[] parameters)
         {
             connection.Open();
-            SqlCommand command = CreateCommand(name, CommandType.StoredProcedure, parameters, connection);
+            var command = CreateCommand(name, CommandType.StoredProcedure, parameters, connection);
 
             // create and fill the dataset via a table adapter
-            SqlDataAdapter adapter = new SqlDataAdapter(command);
-            DataSet dataSet = new DataSet();
+            var adapter = new SqlDataAdapter(command);
+            var dataSet = new DataSet();
             adapter.Fill(dataSet);
 
             return dataSet;
@@ -163,7 +161,7 @@ namespace Halloumi.Common.Helpers
         public static object ExecuteScalar(SqlConnection connection, string name, SqlParameter[] parameters)
         {
             connection.Open();
-            SqlCommand command = CreateCommand(name, CommandType.StoredProcedure, parameters, connection);
+            var command = CreateCommand(name, CommandType.StoredProcedure, parameters, connection);
             return command.ExecuteScalar();
         }
 
@@ -189,7 +187,7 @@ namespace Halloumi.Common.Helpers
         public static void ExecuteNonQuery(SqlConnection connection, string name, SqlParameter[] parameters)
         {
             connection.Open();
-            SqlCommand command = CreateCommand(name, CommandType.StoredProcedure, parameters, connection);
+            var command = CreateCommand(name, CommandType.StoredProcedure, parameters, connection);
             command.ExecuteNonQuery();
         }
 
@@ -215,7 +213,7 @@ namespace Halloumi.Common.Helpers
         public static SqlDataReader ExecuteReaderSql(SqlConnection connection, string sql, SqlParameter[] parameters)
         {
             connection.Open();
-            SqlCommand command = CreateCommand(sql, CommandType.Text, parameters, connection);
+            var command = CreateCommand(sql, CommandType.Text, parameters, connection);
             return command.ExecuteReader();
         }
 
@@ -244,11 +242,11 @@ namespace Halloumi.Common.Helpers
         public static DataSet ExecuteDataSetSql(SqlConnection connection, string sql, SqlParameter[] parameters)
         {
             connection.Open();
-            SqlCommand command = CreateCommand(sql, CommandType.Text, parameters, connection);
+            var command = CreateCommand(sql, CommandType.Text, parameters, connection);
 
             // create and fill the dataset via a table adapter
-            SqlDataAdapter adapter = new SqlDataAdapter(command);
-            DataSet dataSet = new DataSet();
+            var adapter = new SqlDataAdapter(command);
+            var dataSet = new DataSet();
             adapter.Fill(dataSet);
                 
             return dataSet;
@@ -279,7 +277,7 @@ namespace Halloumi.Common.Helpers
         public static object ExecuteScalarSql(SqlConnection connection, string sql, SqlParameter[] parameters)
         {
             connection.Open();
-            SqlCommand command = CreateCommand(sql, CommandType.Text, parameters, connection);
+            var command = CreateCommand(sql, CommandType.Text, parameters, connection);
             return command.ExecuteScalar();
         }
 
@@ -305,7 +303,7 @@ namespace Halloumi.Common.Helpers
         public static void ExecuteNonQuerySql(SqlConnection connection, string sql, SqlParameter[] parameters)
         {
             connection.Open();
-            SqlCommand command = CreateCommand(sql, CommandType.Text, parameters, connection);
+            var command = CreateCommand(sql, CommandType.Text, parameters, connection);
             command.ExecuteNonQuery();
         }
 
@@ -332,9 +330,9 @@ namespace Halloumi.Common.Helpers
         {
             connection.Open();
 
-            SqlCommand command = CreateCommand(sql, CommandType.Text, parameters, connection);
-            DataTable table = new DataTable();
-            using (SqlDataReader reader = command.ExecuteReader())
+            var command = CreateCommand(sql, CommandType.Text, parameters, connection);
+            var table = new DataTable();
+            using (var reader = command.ExecuteReader())
             {
                 table.Load(reader);
             }
@@ -370,9 +368,9 @@ namespace Halloumi.Common.Helpers
         {
             connection.Open();
 
-            SqlCommand command = CreateCommand(name, CommandType.StoredProcedure, parameters, connection);
-            DataTable table = new DataTable();
-            using (SqlDataReader reader = command.ExecuteReader())
+            var command = CreateCommand(name, CommandType.StoredProcedure, parameters, connection);
+            var table = new DataTable();
+            using (var reader = command.ExecuteReader())
             {
                 table.Load(reader);
             }
@@ -417,7 +415,7 @@ namespace Halloumi.Common.Helpers
                 name = "@" + name;
             }
 
-            SqlParameter parameter = new SqlParameter(name, type, size);
+            var parameter = new SqlParameter(name, type, size);
             parameter.Direction = direction;
             parameter.Value = value;
 
@@ -511,7 +509,7 @@ namespace Halloumi.Common.Helpers
             SqlParameter[] parameters, 
             SqlConnection connection)
         {
-            SqlCommand command = new SqlCommand();
+            var command = new SqlCommand();
 
             command.Connection = connection;
             command.CommandType = commandType;

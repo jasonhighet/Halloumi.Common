@@ -64,7 +64,7 @@ namespace Halloumi.Common.Helpers
                 fileMasks = "*.*";
 
             // convert to array of each file mask
-            string[] fileMaskArray = fileMasks.Split(';');
+            var fileMaskArray = fileMasks.Split(';');
 
             SearchFiles(matchingFiles, folder, fileMaskArray, includeSubfolders);
 
@@ -84,9 +84,9 @@ namespace Halloumi.Common.Helpers
                 return;
 
             // add all matching files in current folder to list
-            foreach (string fileMask in fileMasks)
+            foreach (var fileMask in fileMasks)
             {
-                foreach (string fileName in Directory.GetFiles(folder, fileMask))
+                foreach (var fileName in Directory.GetFiles(folder, fileMask))
                 {
                     matchingFiles.Add(fileName);
                 }
@@ -95,7 +95,7 @@ namespace Halloumi.Common.Helpers
             // search all sub-folders if neccessary
             if (includeSubfolders)
             {
-                foreach (string subFolder in Directory.GetDirectories(folder))
+                foreach (var subFolder in Directory.GetDirectories(folder))
                 {
                     SearchFiles(matchingFiles, subFolder, fileMasks, includeSubfolders);
                 }
@@ -118,9 +118,9 @@ namespace Halloumi.Common.Helpers
             }
 
             // convert to array of each folder mask
-            string[] folderMaskArray = folderMasks.Split(';');
+            var folderMaskArray = folderMasks.Split(';');
 
-            List<string> matchingFolders = new List<string>();
+            var matchingFolders = new List<string>();
 
             SearchFolders(matchingFolders, folder, folderMaskArray, includeSubfolders);
 
@@ -137,9 +137,9 @@ namespace Halloumi.Common.Helpers
         private static void SearchFolders(List<string> matchingFolders, string folder, string[] folderMasks, bool includeSubfolders)
         {
             // add all matching folders in current folder to list
-            foreach (string folderMask in folderMasks)
+            foreach (var folderMask in folderMasks)
             {
-                foreach (string folderName in Directory.GetDirectories(folder, folderMask))
+                foreach (var folderName in Directory.GetDirectories(folder, folderMask))
                 {
                     matchingFolders.Add(folderName);
                 }
@@ -148,7 +148,7 @@ namespace Halloumi.Common.Helpers
             // search all sub-folders if neccessary
             if (includeSubfolders)
             {
-                foreach (string subFolder in Directory.GetDirectories(folder))
+                foreach (var subFolder in Directory.GetDirectories(folder))
                 {
                     SearchFolders(matchingFolders, subFolder, folderMasks, includeSubfolders);
                 }
@@ -167,7 +167,7 @@ namespace Halloumi.Common.Helpers
             {
                 // calculate md5 hash
                 var md5 = System.Security.Cryptography.MD5.Create();
-                byte[] checksum = md5.ComputeHash(stream);
+                var checksum = md5.ComputeHash(stream);
                 return BitConverter.ToString(checksum).Replace("-", String.Empty);
             }
         }
@@ -204,7 +204,7 @@ namespace Halloumi.Common.Helpers
         {
             if (filename.Length > maxLength)
             {
-                StringBuilder shortPath = new StringBuilder(maxLength + maxLength + 2);  // for safety
+                var shortPath = new StringBuilder(maxLength + maxLength + 2);  // for safety
                 if (PathCompactPathEx(shortPath, filename, maxLength, 0))
                 {
                     return shortPath.ToString();

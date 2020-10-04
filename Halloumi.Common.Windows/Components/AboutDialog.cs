@@ -4,11 +4,8 @@
 //  Author:          Jason Highet
 //  Date Created:    12 February 2008
 //------------------------------------------------------------------------------------------------
-using System;
-using System.Collections.Generic;
+
 using System.ComponentModel;
-using System.Diagnostics;
-using System.Text;
 using Halloumi.Common.Windows.Forms;
 using System.Drawing;
 using System.Windows.Forms;
@@ -92,7 +89,7 @@ namespace Halloumi.Common.Windows.Controls
         /// </summary>
         public void Show()
         {
-            using (frmAbout aboutForm = new frmAbout())
+            using (var aboutForm = new frmAbout())
             {
                 aboutForm.Image = this.Image;
                 aboutForm.StartPosition = this.StartPosition;

@@ -1,10 +1,7 @@
 using System;
 using System.ComponentModel;
 using System.Collections.Generic;
-using System.Diagnostics;
-using System.Text;
 using System.Windows.Forms;
-using System.Runtime.InteropServices;
 using System.IO;
 using Halloumi.Common.Windows.Helpers;
 using Halloumi.Common.Helpers;
@@ -281,8 +278,8 @@ namespace Halloumi.Common.Windows.Controllers
                 _fileMenu = value;
                 if (_fileMenu != null)
                 {
-                    int itemCount = contextMenu.Items.Count;
-                    for (int i = 0; i < itemCount; i++)
+                    var itemCount = contextMenu.Items.Count;
+                    for (var i = 0; i < itemCount; i++)
                     {
                         _fileMenu.DropDownItems.Insert(i, contextMenu.Items[0]);
                     }
@@ -309,7 +306,7 @@ namespace Halloumi.Common.Windows.Controllers
         public void OpenFromCommandLine()
         {
             // get file name from command line parameters
-            string filename = ApplicationHelper.GetCommandLineParameters();
+            var filename = ApplicationHelper.GetCommandLineParameters();
 
             // if no command line, create new document, otherwise open file
             if (filename == "")
@@ -329,7 +326,7 @@ namespace Halloumi.Common.Windows.Controllers
         public bool New()
         {
             // get new file name
-            string filename = "Untitled" + GetDefaultExtension();
+            var filename = "Untitled" + GetDefaultExtension();
             return New(filename);
         }
 
@@ -346,7 +343,7 @@ namespace Halloumi.Common.Windows.Controllers
             }
 
             // raise 'new' event
-            FileMenuControllerEventArgs e = new FileMenuControllerEventArgs(filename);
+            var e = new FileMenuControllerEventArgs(filename);
             if (NewDocument != null)
             {
                 NewDocument(this, e);
@@ -392,7 +389,7 @@ namespace Halloumi.Common.Windows.Controllers
         /// <returns>True if successful</returns>
         public bool SaveAs()
         {
-            SaveFileDialog dialog = new SaveFileDialog();
+            var dialog = new SaveFileDialog();
             dialog.Filter = GetFullFileFilter();
             dialog.Title = "Save As";
             dialog.FileName = _filename;
@@ -426,7 +423,7 @@ namespace Halloumi.Common.Windows.Controllers
             fileSystemWatcher.EnableRaisingEvents = false;
 
             // raise 'save' event
-            FileMenuControllerEventArgs e = new FileMenuControllerEventArgs(filename);
+            var e = new FileMenuControllerEventArgs(filename);
             if (SaveDocument != null)
             {
                 SaveDocument(this, e);
@@ -471,7 +468,7 @@ namespace Halloumi.Common.Windows.Controllers
         /// <returns>True if successful</returns>
         public bool Open()
         {
-            OpenFileDialog dialog = new OpenFileDialog();
+            var dialog = new OpenFileDialog();
             dialog.Filter = GetFullFileFilter();
             dialog.Title = "Open";
             dialog.DefaultExt = "";
@@ -519,7 +516,7 @@ namespace Halloumi.Common.Windows.Controllers
             }
 
             // raise 'load' event
-            FileMenuControllerEventArgs e = new FileMenuControllerEventArgs(filename);
+            var e = new FileMenuControllerEventArgs(filename);
             if (LoadDocument != null)
             {
                 LoadDocument(this, e);
@@ -552,16 +549,16 @@ namespace Halloumi.Common.Windows.Controllers
             if (!_isModified || _isNew) return;
 
             // otherwise, confirm changes and reload
-            string message = "'"
+            var message = "'"
                 + FileSystemHelper.TruncateLongFilename(_filename)
                 + "' has changed."
                 + Environment.NewLine
                 + Environment.NewLine
                 + "Do you want to save the changes?";
 
-            DialogResult confirm = MessageBoxHelper.ConfirmOrCancel(message, "Save Changes?");
+            var confirm = MessageBoxHelper.ConfirmOrCancel(message, "Save Changes?");
 
-            string filename = _filename;
+            var filename = _filename;
             if (confirm != DialogResult.Cancel)
             {
                 if (confirm == DialogResult.Yes)
@@ -589,17 +586,17 @@ namespace Halloumi.Common.Windows.Controllers
         /// <returns>True if the current document can be closed, or false if not.</returns>
         public bool ConfirmDocumentClose()
         {
-            bool confirmClose = true;
+            var confirmClose = true;
             if (_isModified)
             {
-                string message = "'"
+                var message = "'"
                     + FileSystemHelper.TruncateLongFilename(_filename)
                     + "' has changed."
                     + Environment.NewLine
                     + Environment.NewLine
                     + "Do you want to save the changes?";
 
-                DialogResult confirm = MessageBoxHelper.ConfirmOrCancel(message, "Save Changes?");
+                var confirm = MessageBoxHelper.ConfirmOrCancel(message, "Save Changes?");
 
                 if (confirm == DialogResult.Cancel)
                 {
@@ -632,7 +629,7 @@ namespace Halloumi.Common.Windows.Controllers
             {
                 _modifiedExternally = false;
 
-                string message = "'"
+                var message = "'"
                     + FileSystemHelper.TruncateLongFilename(_filename)
                     + "' has been modified externally."
                     + Environment.NewLine
@@ -658,13 +655,13 @@ namespace Halloumi.Common.Windows.Controllers
         /// <returns>A list of file types</returns>
         private List<FileType> GetFileTypes(string fileFilter)
         {
-            List<FileType> fileTypes = new List<FileType>();
+            var fileTypes = new List<FileType>();
 
             FileType fileType = null;
-            string[] filterEntries = fileFilter.Split('|');
-            for (int i = 0; i < filterEntries.Length; i++)
+            var filterEntries = fileFilter.Split('|');
+            for (var i = 0; i < filterEntries.Length; i++)
             {
-                string entry = filterEntries[i];
+                var entry = filterEntries[i];
                 if (i % 2 == 0)
                 {
                     fileType = new FileType();
@@ -710,19 +707,19 @@ namespace Halloumi.Common.Windows.Controllers
         /// <returns>The full file filter, including All Files and All File Types filters</returns>
         private string GetFullFileFilter()
         {
-            string fullFileFilter = string.Empty;
+            var fullFileFilter = string.Empty;
 
             // if more than one file type, add 'All files types' filter
             if (_fileTypes != null && _fileTypes.Count > 1)
             {
                 fullFileFilter = "All File Types (";
-                foreach (FileType fileType in _fileTypes)
+                foreach (var fileType in _fileTypes)
                 {
                     fullFileFilter += "*" + fileType.Extension + ",";
                 }
                 fullFileFilter = fullFileFilter.Substring(0, fullFileFilter.Length - 1);
                 fullFileFilter += ")|";
-                foreach (FileType fileType in _fileTypes)
+                foreach (var fileType in _fileTypes)
                 {
                     fullFileFilter += "*" + fileType.Extension + ";";
                 }
@@ -773,7 +770,7 @@ namespace Halloumi.Common.Windows.Controllers
         {
             if (_fileTypes.Count > 1)
             {
-                for (int i = 0; i < _fileTypes.Count; i++)
+                for (var i = 0; i < _fileTypes.Count; i++)
                 {
                     if (_fileTypes[i].Extension == extension)
                     {
@@ -789,7 +786,7 @@ namespace Halloumi.Common.Windows.Controllers
         /// </summary>
         private void UpdateTitle()
         {
-            string title = FileSystemHelper.TruncateLongFilename(Path.GetFileName(_filename));
+            var title = FileSystemHelper.TruncateLongFilename(Path.GetFileName(_filename));
             if (_isModified)
             {
                 title += "*";
@@ -831,7 +828,7 @@ namespace Halloumi.Common.Windows.Controllers
         private void RemoveFromRecentFiles(string filename)
         {
             // remove from list if file is already there
-            for (int i = 0; i < _recentFiles.Count; i++)
+            for (var i = 0; i < _recentFiles.Count; i++)
             {
                 if (_recentFiles[i] == filename)
                 {
@@ -847,11 +844,11 @@ namespace Halloumi.Common.Windows.Controllers
         /// </summary>
         private void UpdateRecentFilesMenu()
         {
-            for (int i = 0; i < _maxRecentFiles; i++)
+            for (var i = 0; i < _maxRecentFiles; i++)
             {
                 if (i < _recentFiles.Count)
                 {
-                    string text = "&"
+                    var text = "&"
                         + (i + 1).ToString()
                         + ". "
                         + FileSystemHelper.TruncateLongFilename(_recentFiles[i]);
@@ -873,9 +870,9 @@ namespace Halloumi.Common.Windows.Controllers
         private void CreateRecentFilesMenuItems()
         {
             mnuRecentItems.DropDownItems.Clear();
-            for (int i = 1; i <= _maxRecentFiles; i++)
+            for (var i = 1; i <= _maxRecentFiles; i++)
             {
-                ToolStripMenuItem menuItem = new ToolStripMenuItem();
+                var menuItem = new ToolStripMenuItem();
                 menuItem.Text = "&" + i.ToString() + ". File" + i.ToString() + ".ext";
                 menuItem.Click += new System.EventHandler(RecentItemClick);
                 mnuRecentItems.DropDownItems.Add(menuItem);
@@ -889,10 +886,10 @@ namespace Halloumi.Common.Windows.Controllers
         {
             mnuNew.DropDownItems.Clear();
 
-            bool first = true;
-            foreach (FileType fileType in _fileTypes)
+            var first = true;
+            foreach (var fileType in _fileTypes)
             {
-                ToolStripMenuItem menuItem = new ToolStripMenuItem();
+                var menuItem = new ToolStripMenuItem();
                 menuItem.Text = "&" + fileType.Name;
                 if (first)
                 {
@@ -986,13 +983,13 @@ namespace Halloumi.Common.Windows.Controllers
             if (this.DesignMode) return;
             Application.DoEvents();
 
-            ToolStripMenuItem menuItem = (ToolStripMenuItem)sender;
-            int index = int.Parse(menuItem.Text.Substring(1, 1)) - 1;
-            string recentFile = _recentFiles[index];
+            var menuItem = (ToolStripMenuItem)sender;
+            var index = int.Parse(menuItem.Text.Substring(1, 1)) - 1;
+            var recentFile = _recentFiles[index];
 
             if (!File.Exists(recentFile))
             {
-                string message = "'"
+                var message = "'"
                     + FileSystemHelper.TruncateLongFilename(recentFile)
                     + "' cannot be opened or does not exist."
                     + Environment.NewLine
@@ -1018,8 +1015,8 @@ namespace Halloumi.Common.Windows.Controllers
             if (this.DesignMode) return;
             Application.DoEvents();
 
-            ToolStripMenuItem menuItem = (ToolStripMenuItem)sender;
-            foreach (FileType fileType in _fileTypes)
+            var menuItem = (ToolStripMenuItem)sender;
+            foreach (var fileType in _fileTypes)
             {
                 if (menuItem.Text.Replace("&", "") == fileType.Name)
                 {

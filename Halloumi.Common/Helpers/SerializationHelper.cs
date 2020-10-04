@@ -1,7 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
+﻿using System.Text;
 using System.Xml.Serialization;
 using System.IO;
 
@@ -23,9 +20,9 @@ namespace Halloumi.Common.Helpers
         public static string ToXmlString(T item)
         {
             // deserialize to string builder
-            XmlSerializer serializer = new XmlSerializer(typeof(T));
-            StringBuilder builder = new StringBuilder();
-            using (StringWriter writer = new StringWriter(builder))
+            var serializer = new XmlSerializer(typeof(T));
+            var builder = new StringBuilder();
+            using (var writer = new StringWriter(builder))
             {
                 serializer.Serialize(writer, item);
             }
@@ -61,8 +58,8 @@ namespace Halloumi.Common.Helpers
         public static T FromXmlString(string xml, bool quietMode)
         {
             // convert xml string to object and return (ignores any errors)
-            XmlSerializer serializer = new XmlSerializer(typeof(T));
-            using (StringReader reader = new StringReader(xml))
+            var serializer = new XmlSerializer(typeof(T));
+            using (var reader = new StringReader(xml))
             {
                 if (quietMode)
                 {

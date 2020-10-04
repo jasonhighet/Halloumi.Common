@@ -1,7 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
 using ComponentFactory.Krypton.Toolkit;
 using System.ComponentModel;
 using System.Windows.Forms;

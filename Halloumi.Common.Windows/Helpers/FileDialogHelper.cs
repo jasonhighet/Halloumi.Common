@@ -1,8 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Windows.Forms;
+﻿using System.Windows.Forms;
 
 namespace Halloumi.Common.Windows.Helpers
 {
@@ -24,7 +20,6 @@ namespace Halloumi.Common.Windows.Helpers
         /// Shows a file dialog and then returns the selected file
         /// </summary>
         /// <param name="fileFilter">The file filter.</param>
-        /// <param name="intitialFolder">The intitial folder.</param>
         /// <returns>
         /// The selected filename
         /// </returns>
@@ -43,7 +38,7 @@ namespace Halloumi.Common.Windows.Helpers
         /// </returns>
         public static string OpenSingle(string fileFilter, string initialFolder)
         {
-            string filename = "";
+            var filename = "";
             if (fileFilter.IndexOf("*.*") < 0) { fileFilter += "|All Files|*.*"; }
 
             var openFileDialog = new OpenFileDialog();
@@ -71,7 +66,7 @@ namespace Halloumi.Common.Windows.Helpers
         /// <returns>The selected filename</returns>
         public static string SaveAs(string fileFilter, string defaultFileName)
         {
-            string filename = "";
+            var filename = "";
             if (fileFilter.IndexOf("*.*") < 0) { fileFilter += "|All files|*.*"; }
 
             var saveFileDialog = new SaveFileDialog();

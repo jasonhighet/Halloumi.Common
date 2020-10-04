@@ -1,7 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
 using System.ComponentModel;
 using System.Drawing;
 using ComponentFactory.Krypton.Toolkit;
@@ -71,10 +68,10 @@ namespace Halloumi.Common.Windows.Controls
                 return;
             }
 
-            PaletteMode palette = KryptonHelper.GetCurrentPalette();
-            Color textColor = Color.Black;
-            Color captionColor = Color.Black;
-            Color headingColor = Color.Black;
+            var palette = KryptonHelper.GetCurrentPalette();
+            var textColor = Color.Black;
+            var captionColor = Color.Black;
+            var headingColor = Color.Black;
 
             if (palette == PaletteMode.Office2007Black
                 || palette == PaletteMode.Office2007Blue

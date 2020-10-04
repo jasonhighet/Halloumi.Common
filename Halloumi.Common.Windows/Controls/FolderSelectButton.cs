@@ -1,7 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
 using ComponentFactory.Krypton.Toolkit;
 using System.ComponentModel;
 using System.Windows.Forms;
@@ -79,7 +76,7 @@ namespace Halloumi.Common.Windows.Controls
         /// </summary>
         private void SelectFolder()
         {
-            FolderBrowserDialog dialog = new FolderBrowserDialog();
+            var dialog = new FolderBrowserDialog();
             dialog.Description = this.Title;
 
             if (Directory.Exists(this.SelectedFolder))

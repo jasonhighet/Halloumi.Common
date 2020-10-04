@@ -1,11 +1,6 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.ComponentModel;
-using System.Diagnostics;
-using System.Text;
 using Halloumi.Common.Windows.Forms;
-using System.Drawing;
-using System.Windows.Forms;
 
 namespace Halloumi.Common.Windows.Components
 {
@@ -181,9 +176,9 @@ namespace Halloumi.Common.Windows.Components
                 // avoid divide-by-zero errors
                 if (_maximum == 0) return 0;
 
-                decimal current = Convert.ToDecimal(_value);
-                decimal max = Convert.ToDecimal(_maximum);
-                int percentage = Convert.ToInt32(current / max * 100);
+                var current = Convert.ToDecimal(_value);
+                var max = Convert.ToDecimal(_maximum);
+                var percentage = Convert.ToInt32(current / max * 100);
                 if (percentage > 100) percentage = 100;
                 return percentage;
             }
@@ -227,7 +222,7 @@ namespace Halloumi.Common.Windows.Components
             _value = 0;
 
             // show form - this will start the background worker when it is shown
-            using (frmProgressDialog progressForm = new frmProgressDialog(this))
+            using (var progressForm = new frmProgressDialog(this))
             {
                 progressForm.ShowDialog();
             }

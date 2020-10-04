@@ -126,7 +126,7 @@ namespace Halloumi.Common.Windows.Controls
         /// <returns></returns>
         public int GetSelectedIndexThreadSafe()
         {
-            int index = -1;
+            var index = -1;
             if (this.InvokeRequired)
                 this.Invoke((MethodInvoker)delegate() { index = this.SelectedIndex; });
             else
@@ -162,7 +162,7 @@ namespace Halloumi.Common.Windows.Controls
         /// <returns>Returns true if the combobox is valid</returns>
         public bool IsValid()
         {
-            bool isValid = true;
+            var isValid = true;
 
             if (this.IsRequired && this.Text == "")
             {
@@ -178,8 +178,8 @@ namespace Halloumi.Common.Windows.Controls
             {
                 // if not valid int, or less than minvalue,
                 // or more than maxvalue, is not valid
-                int intValue = 0;
-                bool validInt = int.TryParse(this.Text, out intValue);
+                var intValue = 0;
+                var validInt = int.TryParse(this.Text, out intValue);
                 if (!validInt
                     || intValue < this.MinimumValue
                     || intValue > this.MaximumValue)
@@ -192,14 +192,14 @@ namespace Halloumi.Common.Windows.Controls
             // validate the contents of the combobox using the regular expression provided
             if (this.RegularExpression != string.Empty)
             {
-                Regex regex = new Regex(this.RegularExpression);
+                var regex = new Regex(this.RegularExpression);
                 isValid = regex.IsMatch(this.Text);
             }
 
             // if control is valid so far, raise custom validate event
             if (CustomValidate != null && isValid)
             {
-                CancelEventArgs cancelEventArgs = new CancelEventArgs(false);
+                var cancelEventArgs = new CancelEventArgs(false);
                 CustomValidate(this, cancelEventArgs);
                 isValid = !cancelEventArgs.Cancel;
             }
@@ -241,7 +241,7 @@ namespace Halloumi.Common.Windows.Controls
             if (this.EntryType == TextEntryType.Integer)
             {
                 // if entry mode is integer, filter out non-numeric chars
-                string filteredText = Regex.Replace(this.Text, "[^0-9]", "");
+                var filteredText = Regex.Replace(this.Text, "[^0-9]", "");
                 if (filteredText != this.Text)
                 {
                     this.Text = filteredText;

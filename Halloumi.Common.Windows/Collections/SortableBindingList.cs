@@ -1,7 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
 using System.Reflection;
 using System.Collections;
 using System.ComponentModel;
@@ -69,9 +67,9 @@ namespace Halloumi.Common.Windows.Collections
         /// <param name="direction">The direction.</param>
         protected override void ApplySortCore(PropertyDescriptor property, ListSortDirection direction)
         {
-            List<T> itemsList = (List<T>)this.Items;
+            var itemsList = (List<T>)this.Items;
 
-            Type propertyType = property.PropertyType;
+            var propertyType = property.PropertyType;
             PropertyComparer<T> comparer;
             if (!_comparers.TryGetValue(propertyType, out comparer))
             {
@@ -109,10 +107,10 @@ namespace Halloumi.Common.Windows.Collections
         /// <returns>The core index</returns>
         protected override int FindCore(PropertyDescriptor property, object key)
         {
-            int count = this.Count;
-            for (int i = 0; i < count; ++i)
+            var count = this.Count;
+            for (var i = 0; i < count; ++i)
             {
-                T element = this[i];
+                var element = this[i];
                 if (property.GetValue(element).Equals(key))
                 {
                     return i;
@@ -210,7 +208,7 @@ namespace Halloumi.Common.Windows.Collections
             public PropertyComparer(PropertyDescriptor property, ListSortDirection direction)
             {
                 _propertyDescriptor = property;
-                Type comparerForPropertyType = typeof(Comparer<>).MakeGenericType(property.PropertyType);
+                var comparerForPropertyType = typeof(Comparer<>).MakeGenericType(property.PropertyType);
                 _comparer = (IComparer)comparerForPropertyType.InvokeMember("Default", BindingFlags.Static | BindingFlags.GetProperty | BindingFlags.Public, null, null, null);
                 this.SetListSortDirection(direction);
             }

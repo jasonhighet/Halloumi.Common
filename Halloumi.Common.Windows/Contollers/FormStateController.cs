@@ -1,16 +1,9 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.ComponentModel;
-using System.Diagnostics;
-using System.Linq;
-using System.Text;
-using Halloumi.Common.Windows.Forms;
 using System.Drawing;
 using System.Windows.Forms;
 using Halloumi.Common.Helpers;
 using Halloumi.Common.Windows.Helpers;
-using System.Xml.Serialization;
-using System.IO;
 
 namespace Halloumi.Common.Windows.Contollers
 {
@@ -125,7 +118,7 @@ namespace Halloumi.Common.Windows.Contollers
 
             // save current visible state and hide
             _isBeingResized = true;
-            bool oldVisible = _form.Visible;
+            var oldVisible = _form.Visible;
             if (_formShown)
             {
                 _form.Visible = false;

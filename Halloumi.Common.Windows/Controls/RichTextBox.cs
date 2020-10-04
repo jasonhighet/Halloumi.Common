@@ -1,9 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.ComponentModel;
-using System.Linq;
 using System.Runtime.InteropServices;
-using System.Text;
 using System.Windows.Forms;
 
 namespace Halloumi.Common.Windows.Controls
@@ -56,7 +54,7 @@ namespace Halloumi.Common.Windows.Controls
         /// <param name="cursor">The cursor to change to.</param>
         public void ChangeCursor(Cursor cursor)
         {
-            Cursor currentCursor = this.Cursor;
+            var currentCursor = this.Cursor;
             _cursorStack.Push(currentCursor);
             this.Cursor = cursor;
             Application.DoEvents();
@@ -109,8 +107,8 @@ namespace Halloumi.Common.Windows.Controls
         {
             if (_selectionLengthStack.Count > 0 && _selectionStartStack.Count > 0)
             {
-                int selectionStart = _selectionStartStack.Pop();
-                int selectionLength = _selectionLengthStack.Pop();
+                var selectionStart = _selectionStartStack.Pop();
+                var selectionLength = _selectionLengthStack.Pop();
                 this.Select(selectionStart, selectionLength);
             }
         }
@@ -159,16 +157,16 @@ namespace Halloumi.Common.Windows.Controls
             else
             {
                 // find the line index of the last line of the selected text
-                int endLine = this.GetLineFromCharIndex(this.SelectionStart + this.SelectionLength);
+                var endLine = this.GetLineFromCharIndex(this.SelectionStart + this.SelectionLength);
 
                 // find the index of the first char of the first selected line
-                int start = this.GetFirstCharIndexOfCurrentLine();
+                var start = this.GetFirstCharIndexOfCurrentLine();
 
                 // find the index of the last char of the last selected line
-                int end = this.GetFirstCharIndexFromLine(endLine) + this.Lines[endLine].Length;
+                var end = this.GetFirstCharIndexFromLine(endLine) + this.Lines[endLine].Length;
 
                 // set the length to be the difference between them
-                int length = end - start;
+                var length = end - start;
 
                 // select new text
                 this.Select(start, length);

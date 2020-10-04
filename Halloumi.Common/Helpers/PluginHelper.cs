@@ -1,9 +1,6 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.IO;
-using System.Linq;
 using System.Reflection;
-using System.Text;
 
 
 namespace Halloumi.Common.Helpers
@@ -20,15 +17,15 @@ namespace Halloumi.Common.Helpers
         /// <returns>A list of loaded plugins</returns>
         public static List<T> LoadPlugins()
         {
-            List<T> plugins = new List<T>();
-            DirectoryInfo folder = new DirectoryInfo(ApplicationHelper.GetExecutableFolder());
+            var plugins = new List<T>();
+            var folder = new DirectoryInfo(ApplicationHelper.GetExecutableFolder());
 
-            string filemask = typeof(T).FullName.Replace(typeof(T).Name, "") + "*.dll";
+            var filemask = typeof(T).FullName.Replace(typeof(T).Name, "") + "*.dll";
 
-            foreach (FileInfo file in folder.GetFiles(filemask))
+            foreach (var file in folder.GetFiles(filemask))
             {
-                Assembly assembly = Assembly.LoadFrom(file.FullName);
-                foreach (Type type in assembly.GetTypes())
+                var assembly = Assembly.LoadFrom(file.FullName);
+                foreach (var type in assembly.GetTypes())
                 {
                     if (!type.IsAbstract)
                     {
@@ -36,7 +33,7 @@ namespace Halloumi.Common.Helpers
                         {
                             try
                             {
-                                T plugin = (T)type.InvokeMember(null, BindingFlags.CreateInstance, null, null, null);
+                                var plugin = (T)type.InvokeMember(null, BindingFlags.CreateInstance, null, null, null);
                                 plugins.Add(plugin);
                             }
                             catch

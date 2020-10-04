@@ -1,7 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
 using System.Diagnostics;
 
 namespace Halloumi.Common.Helpers
@@ -28,7 +25,7 @@ namespace Halloumi.Common.Helpers
         /// <param name="exception">The exception to log.</param>
         public static void LogError(Exception exception)
         {
-            string text = exception.ToString()
+            var text = exception.ToString()
                 + Environment.NewLine
                 + Environment.NewLine
                 + exception.StackTrace;
@@ -84,7 +81,7 @@ namespace Halloumi.Common.Helpers
         {
 
             const string logName = "Application";
-            string logSource = ApplicationHelper.GetTitle();            
+            var logSource = ApplicationHelper.GetTitle();            
             
             try
             {

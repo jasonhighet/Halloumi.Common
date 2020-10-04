@@ -1,11 +1,6 @@
 using System;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.Data;
 using System.Drawing;
-using System.Text;
 using System.Windows.Forms;
-using ComponentFactory.Krypton.Toolkit;
 
 namespace Halloumi.Common.Windows.Forms
 {
@@ -119,12 +114,12 @@ namespace Halloumi.Common.Windows.Forms
             this.Width = Convert.ToInt32(Screen.PrimaryScreen.WorkingArea.Width * 0.66);
 
             // Set maximum layout size.
-            SizeF maxSize = new SizeF(lblText.Width, Screen.PrimaryScreen.WorkingArea.Height);
+            var maxSize = new SizeF(lblText.Width, Screen.PrimaryScreen.WorkingArea.Height);
 
-            using (Graphics graphics = this.CreateGraphics())
+            using (var graphics = this.CreateGraphics())
             {
                 // measure the string.
-                SizeF size = graphics.MeasureString(text, lblText.Font, maxSize);
+                var size = graphics.MeasureString(text, lblText.Font, maxSize);
                 
                 // resize form to fit string
                 if (size.Height > lblText.Height)

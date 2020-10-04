@@ -1,11 +1,7 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
 using System.ComponentModel;
 using System.Drawing;
 using ComponentFactory.Krypton.Toolkit;
-using System.Diagnostics;
 using Halloumi.Common.Windows.Helpers;
 using System.Windows.Forms;
 

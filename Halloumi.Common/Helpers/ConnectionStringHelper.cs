@@ -1,8 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Data.SqlClient;
+﻿using System.Data.SqlClient;
 
 namespace Halloumi.Common.Helpers
 {
@@ -78,7 +74,7 @@ namespace Halloumi.Common.Helpers
         /// <returns>The created connection string</returns>
         public static string NewConnectionString(string server, string database, string username, string password, int timeout)
         {
-            string connectionString = string.Empty;
+            var connectionString = string.Empty;
 
             if (server == string.Empty)
             {
@@ -123,7 +119,7 @@ namespace Halloumi.Common.Helpers
         {
             try
             {
-                using (SqlConnection connection = new SqlConnection(connectionString))
+                using (var connection = new SqlConnection(connectionString))
                 {
                     connection.Open();
                 }

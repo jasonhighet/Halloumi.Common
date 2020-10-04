@@ -1,10 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.Drawing;
-using System.Data;
-using System.Linq;
-using System.Text;
 using System.Windows.Forms;
 
 namespace Halloumi.Common.Windows.Controls
@@ -53,10 +47,10 @@ namespace Halloumi.Common.Windows.Controls
 
         private void ResizeLevel()
         {
-            int adjustedMax = _max - _min;
-            int adjustedValue = _value - _min;
-            decimal percent = (decimal)adjustedValue / (decimal)adjustedMax;
-            pnlLevel.Width = (int)((decimal)(pnlBackground.Width) * percent);
+            var adjustedMax = _max - _min;
+            var adjustedValue = _value - _min;
+            var percent = adjustedValue / (decimal)adjustedMax;
+            pnlLevel.Width = (int)(pnlBackground.Width * percent);
         }
 
         protected override void OnResize(EventArgs e)

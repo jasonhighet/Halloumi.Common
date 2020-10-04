@@ -1,10 +1,5 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Drawing;
+﻿using System.Drawing;
 using System.Windows.Forms;
-using Halloumi.Common.Helpers;
 
 namespace Halloumi.Common.Windows.Helpers
 {
@@ -19,9 +14,9 @@ namespace Halloumi.Common.Windows.Helpers
         public static Size GetDesktopSize()
         {
             // calculate desktop size
-            int desktopWidth = 0;
-            int desktopHeight = 0;
-            for (int i = 0; i < Screen.AllScreens.Length; i++)
+            var desktopWidth = 0;
+            var desktopHeight = 0;
+            for (var i = 0; i < Screen.AllScreens.Length; i++)
             {
                 desktopWidth += Screen.AllScreens[i].WorkingArea.Width;
                 if (Screen.AllScreens[i].WorkingArea.Height > desktopHeight)
@@ -49,7 +44,7 @@ namespace Halloumi.Common.Windows.Helpers
         /// <returns>True if the location in in the desktop, otherwise false.</returns>
         public static bool IsLocationInDesktop(Point location)
         {
-            Size desktop = GetDesktopSize();
+            var desktop = GetDesktopSize();
 
             if (location.X > desktop.Width
                 || location.Y > desktop.Height

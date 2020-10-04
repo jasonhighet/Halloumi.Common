@@ -1,9 +1,6 @@
 using System;
-using System.Collections.Generic;
 using System.ComponentModel;
-using System.Data;
 using System.Drawing;
-using System.Text;
 using System.Windows.Forms;
 using System.Diagnostics;
 using ComponentFactory.Krypton.Toolkit;
@@ -26,7 +23,7 @@ namespace Halloumi.Common.Windows.Controls
 
         private void SetThemeColors()
         {
-            PaletteMode palette = KryptonHelper.GetCurrentPalette();
+            var palette = KryptonHelper.GetCurrentPalette();
 
             if (palette == PaletteMode.SparkleBlue
                 || palette == PaletteMode.SparkleOrange

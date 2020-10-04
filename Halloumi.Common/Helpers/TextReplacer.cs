@@ -1,9 +1,6 @@
 using System;
-using System.Collections.Generic;
-using System.Text;
 using System.Text.RegularExpressions;
 using System.IO;
-using System.Linq;
 
 namespace Halloumi.Common.Helpers
 {
@@ -100,24 +97,24 @@ namespace Halloumi.Common.Helpers
         public void Replace(string fileName)
         {
             // holds file content
-            string content = string.Empty;
+            var content = string.Empty;
 
             // set to true if an error occurred
-            bool errorOccured = false;
+            var errorOccured = false;
 
             // clear current status
             this.CurrentStatus = string.Empty;
 
             // if using replace codes, replace all codes 
-            string replaceText = this.ReplaceText;
+            var replaceText = this.ReplaceText;
             if (this.UseReplaceCodes)
             {
                 // get file name only
-                string file = Path.GetFileName(fileName);
+                var file = Path.GetFileName(fileName);
 
                 // get folder name only
-                string folder = string.Empty;
-                string[] folders = Path.GetDirectoryName(fileName).Split(Path.DirectorySeparatorChar);
+                var folder = string.Empty;
+                var folders = Path.GetDirectoryName(fileName).Split(Path.DirectorySeparatorChar);
                 if (folders.Length > 0)
                 {
                     folder = folders[folders.Length - 1];
@@ -145,7 +142,7 @@ namespace Halloumi.Common.Helpers
             else
             {
                 // find all matching instances of the find text
-                MatchCollection matchList = this.MatchExpression.Matches(content);
+                var matchList = this.MatchExpression.Matches(content);
 
                 // at least one found, do the replace
                 if (matchList.Count > 0)

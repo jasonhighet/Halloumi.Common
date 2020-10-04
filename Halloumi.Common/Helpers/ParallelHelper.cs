@@ -37,12 +37,12 @@ namespace Halloumi.Common.Helpers
 
         private static IEnumerable<List<T>> GetChunkedLists<T>(List<T> list)
         {
-            int chunkSize = Environment.ProcessorCount * 16;
-            int itemsReturned = 0;
-            int count = list.Count;
+            var chunkSize = Environment.ProcessorCount * 16;
+            var itemsReturned = 0;
+            var count = list.Count;
             while (itemsReturned < count)
             {
-                int currentChunkSize = Math.Min(chunkSize, count - itemsReturned);
+                var currentChunkSize = Math.Min(chunkSize, count - itemsReturned);
                 yield return list.GetRange(itemsReturned, currentChunkSize);
                 itemsReturned += currentChunkSize;
             }

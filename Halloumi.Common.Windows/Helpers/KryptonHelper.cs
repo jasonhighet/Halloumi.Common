@@ -1,7 +1,3 @@
-using System;
-using System.Collections.Generic;
-using System.Text;
-using System.IO;
 using ComponentFactory.Krypton.Toolkit;
 using System.Drawing;
 using Halloumi.Common.Windows.Controls;
@@ -62,9 +58,9 @@ namespace Halloumi.Common.Windows.Helpers
         {
             var palette = GetCurrentPalette();
 
-            Color contentBackColour = Color.WhiteSmoke;
-            Color backgroundBackColour = Color.White;
-            Color buttonStripBackColour = SystemColors.ControlDark;
+            var contentBackColour = Color.WhiteSmoke;
+            var backgroundBackColour = Color.White;
+            var buttonStripBackColour = SystemColors.ControlDark;
 
             if (palette == PaletteMode.Office2007Black
                 || palette == PaletteMode.Office2007Blue

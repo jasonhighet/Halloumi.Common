@@ -1,10 +1,6 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
 using System.Windows.Forms;
 using Halloumi.Common.Windows.Helpers;
-using Halloumi.Common.Helpers;
 
 namespace Halloumi.Common.Windows.Controls
 {

@@ -1,8 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using Microsoft.Win32;
+﻿using Microsoft.Win32;
 using System.Runtime.InteropServices;
 
 namespace Halloumi.Common.Windows.Helpers
@@ -26,13 +22,13 @@ namespace Halloumi.Common.Windows.Helpers
         public static void SetWallpaper(string imagePath, WallpaperStyle style)
         {
             // calculate registry values
-            string wallpaperStyle = "1";
-            string tileWallpaper = "0";
+            var wallpaperStyle = "1";
+            var tileWallpaper = "0";
             if (style == WallpaperStyle.Stretched) wallpaperStyle = "2";
             if (style == WallpaperStyle.Tiled) tileWallpaper = "1";
 
             // set registry values
-            RegistryKey key = Registry.CurrentUser.OpenSubKey(@"Control Panel\Desktop", true);
+            var key = Registry.CurrentUser.OpenSubKey(@"Control Panel\Desktop", true);
             key.SetValue(@"WallpaperStyle", wallpaperStyle);
             key.SetValue(@"TileWallpaper", tileWallpaper);
             

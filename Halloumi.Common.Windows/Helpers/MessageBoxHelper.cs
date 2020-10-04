@@ -1,11 +1,7 @@
 using System;
-using System.Collections.Generic;
-using System.Text;
 using System.Reflection;
-using Microsoft.Win32;
 using System.IO;
 using System.Windows.Forms;
-using ComponentFactory.Krypton.Toolkit;
 using Halloumi.Common.Windows.Forms;
 
 namespace Halloumi.Common.Windows.Helpers
@@ -73,7 +69,7 @@ namespace Halloumi.Common.Windows.Helpers
         /// <returns>True if the user selects 'yes'</returns>
         public static bool Confirm(string text, string title)
         {
-            DialogResult result = Show(text, title, MessageBoxButtons.YesNo, MessageBoxIcon.Question);
+            var result = Show(text, title, MessageBoxButtons.YesNo, MessageBoxIcon.Question);
             return (result == DialogResult.Yes);
         }
 
@@ -113,7 +109,7 @@ namespace Halloumi.Common.Windows.Helpers
         /// <param name="exception">The exception error to display.</param>
         public static void ShowError(Exception exception)
         {
-            string message = exception.Message
+            var message = exception.Message
                 + Environment.NewLine
                 + Environment.NewLine
                 + exception.StackTrace;
@@ -134,7 +130,7 @@ namespace Halloumi.Common.Windows.Helpers
             MessageBoxButtons buttons, 
             MessageBoxIcon icon)
         {
-            using (frmMessageBox messageBoxForm = new frmMessageBox(text, title, buttons, icon))
+            using (var messageBoxForm = new frmMessageBox(text, title, buttons, icon))
             {
                 return messageBoxForm.ShowDialog();
             }
@@ -150,16 +146,16 @@ namespace Halloumi.Common.Windows.Helpers
         private static string ApplicationTitle()
         {
             // get executing assembly
-            Assembly assembly = Assembly.GetEntryAssembly();
+            var assembly = Assembly.GetEntryAssembly();
 
             // get all title attributes on this assembly
-            object[] attributes = assembly.GetCustomAttributes(typeof(AssemblyTitleAttribute), false);
+            var attributes = assembly.GetCustomAttributes(typeof(AssemblyTitleAttribute), false);
 
             // if there is at least one title attribute
             if (attributes.Length > 0)
             {
                 // select the first one
-                AssemblyTitleAttribute titleAttribute = (AssemblyTitleAttribute)attributes[0];
+                var titleAttribute = (AssemblyTitleAttribute)attributes[0];
 
                 // if it is not an empty string, return it
                 if (titleAttribute.Title != "")

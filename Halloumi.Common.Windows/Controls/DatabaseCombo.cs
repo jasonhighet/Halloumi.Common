@@ -1,8 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.ComponentModel;
+﻿using System.ComponentModel;
 using System.Windows.Forms;
 using System.Data;
 using System.Data.SqlClient;
@@ -139,12 +135,12 @@ namespace Halloumi.Common.Windows.Controls
         private static DataTable GetDatabases(string server)
         {
             // generate connection string with short timeout
-            string connectionString = "Data Source=" + server + ";Timeout=5;Integrated Security=SSPI;";
+            var connectionString = "Data Source=" + server + ";Timeout=5;Integrated Security=SSPI;";
 
             DataTable databases = null;
             try
             {
-                using (SqlConnection connection = new SqlConnection(connectionString))
+                using (var connection = new SqlConnection(connectionString))
                 {
                     // get list of databases and sort by name
                     connection.Open();

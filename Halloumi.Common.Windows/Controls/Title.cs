@@ -1,7 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
 using System.Drawing;
 using System.ComponentModel;
 using System.Windows.Forms;
@@ -168,16 +165,16 @@ namespace Halloumi.Common.Windows.Controls
                 return;
             }
 
-            Color foreColor = GetForeColor();
+            var foreColor = GetForeColor();
 
-            using (Graphics graphics = Graphics.FromHwnd(IntPtr.Zero))
+            using (var graphics = Graphics.FromHwnd(IntPtr.Zero))
             {
-                SizeF size = graphics.MeasureString(_text, this.Font, this.Width);
-                RectangleF rectangle = new RectangleF(0, 0, ClientRectangle.Width, ClientRectangle.Height);
-                using (Bitmap bitmap = new Bitmap((int)(size.Width * 1.2F), (int)(size.Height * 1.25F)))
-                using (Graphics bitmapGraphics = Graphics.FromImage(bitmap))
-                using (SolidBrush backBrush = new SolidBrush(Color.FromArgb(16, this.BackColor.R, this.BackColor.G, this.BackColor.B)))
-                using (SolidBrush foreBrush = new SolidBrush(foreColor))
+                var size = graphics.MeasureString(_text, this.Font, this.Width);
+                var rectangle = new RectangleF(0, 0, ClientRectangle.Width, ClientRectangle.Height);
+                using (var bitmap = new Bitmap((int)(size.Width * 1.2F), (int)(size.Height * 1.25F)))
+                using (var bitmapGraphics = Graphics.FromImage(bitmap))
+                using (var backBrush = new SolidBrush(Color.FromArgb(16, this.BackColor.R, this.BackColor.G, this.BackColor.B)))
+                using (var foreBrush = new SolidBrush(foreColor))
                 {
                     // write text to bitmap
                     bitmapGraphics.SmoothingMode = SmoothingMode.HighQuality;
@@ -189,7 +186,7 @@ namespace Halloumi.Common.Windows.Controls
                     //_textBitmap = new Bitmap(bitmap.Width + _blurAmount, bitmap.Height + _blurAmount);
                     _textBitmap = new Bitmap(bitmap.Width + _blurAmount, bitmap.Height - 8);
 
-                    using (Graphics bitmapGraphicsOut = Graphics.FromImage(_textBitmap))
+                    using (var bitmapGraphicsOut = Graphics.FromImage(_textBitmap))
                     {
                         bitmapGraphicsOut.SmoothingMode = SmoothingMode.HighQuality;
                         bitmapGraphicsOut.InterpolationMode = InterpolationMode.HighQualityBilinear;
@@ -197,9 +194,9 @@ namespace Halloumi.Common.Windows.Controls
 
                         // smear image of background of text about to 
                         // make blurred background "halo"
-                        for (int x = 0; x <= _blurAmount; x++)
+                        for (var x = 0; x <= _blurAmount; x++)
                         {
-                            for (int y = 0; y <= _blurAmount; y++)
+                            for (var y = 0; y <= _blurAmount; y++)
                             {
                                 bitmapGraphicsOut.DrawImageUnscaled(bitmap, x, y);
                             }
@@ -225,9 +222,9 @@ namespace Halloumi.Common.Windows.Controls
                 return _foreColor;
             }
 
-            PaletteMode palette = KryptonHelper.GetCurrentPalette();
-            Color headingColor = Color.Black;
-            Color subheadingColor = Color.Black;
+            var palette = KryptonHelper.GetCurrentPalette();
+            var headingColor = Color.Black;
+            var subheadingColor = Color.Black;
 
             if (palette == PaletteMode.Office2007Black
                 || palette == PaletteMode.Office2007Blue

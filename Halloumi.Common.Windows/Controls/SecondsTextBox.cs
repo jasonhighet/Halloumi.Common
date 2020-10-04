@@ -1,7 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
 using System.Windows.Forms;
 using System.ComponentModel;
 using ComponentFactory.Krypton.Toolkit;
@@ -39,7 +36,7 @@ namespace Halloumi.Common.Windows.Controls
         /// </summary>
         private void SetTextFromSeconds()
         {
-            string formattedValue = GetFormattedSeconds();
+            var formattedValue = GetFormattedSeconds();
             if (this.Text != formattedValue)
             {
                 this.Text = formattedValue;
@@ -51,7 +48,7 @@ namespace Halloumi.Common.Windows.Controls
         /// </summary>
         private void SetSecondsFromText()
         {
-            double value = GetSecondsFromText();
+            var value = GetSecondsFromText();
             if (value != this.Seconds)
             {
                 this.Seconds = value;
@@ -66,7 +63,7 @@ namespace Halloumi.Common.Windows.Controls
         {
             try
             {
-                TimeSpan timeSpan = TimeSpan.FromSeconds(_seconds);
+                var timeSpan = TimeSpan.FromSeconds(_seconds);
                 return string.Format("{0:D2}:{1:D2}:{2:D2}.{3:D3}",
                                         timeSpan.Hours,
                                         timeSpan.Minutes,
@@ -84,10 +81,10 @@ namespace Halloumi.Common.Windows.Controls
         {
             try
             {
-                string[] textArray = this.Text.Split(':');
-                string hoursValue = "0";
-                string minutesValue = "0";
-                string secondsValue = "0";
+                var textArray = this.Text.Split(':');
+                var hoursValue = "0";
+                var minutesValue = "0";
+                var secondsValue = "0";
 
                 if (textArray.Length == 1)
                 {

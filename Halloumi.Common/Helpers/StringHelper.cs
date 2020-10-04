@@ -1,10 +1,5 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Text;
 using System.Text.RegularExpressions;
-using System.IO;
-using System.Linq;
-using System.Globalization;
 using System.Threading;
 
 namespace Halloumi.Common.Helpers
@@ -21,8 +16,8 @@ namespace Halloumi.Common.Helpers
         public static string TitleCase(string text)
         {
             // get the culture of current thread and create textinfo object.
-            CultureInfo cultureInfo = Thread.CurrentThread.CurrentCulture;
-            TextInfo textInfo = cultureInfo.TextInfo;
+            var cultureInfo = Thread.CurrentThread.CurrentCulture;
+            var textInfo = cultureInfo.TextInfo;
 
             // convert to title case.
             return textInfo.ToTitleCase(text);
@@ -35,13 +30,13 @@ namespace Halloumi.Common.Helpers
         /// <returns>The text as camel case</returns>
         public static string CamelCase(string text)
         {
-            string newText = string.Empty;
-            bool camelling = true;
+            var newText = string.Empty;
+            var camelling = true;
 
-            for (int i = 0; i < text.Length; i++)
+            for (var i = 0; i < text.Length; i++)
             {
-                char currentChar = text[i];
-                char nextChar = char.MinValue;
+                var currentChar = text[i];
+                var nextChar = char.MinValue;
                 if (i + 1 < text.Length) nextChar = text[i + 1];
 
                 if (camelling && (i == 0 || (char.IsUpper(currentChar) && !char.IsLower(nextChar))))
@@ -66,12 +61,12 @@ namespace Halloumi.Common.Helpers
         /// <returns>The text with spaces seperating the words</returns>
         public static string SeperateWordsByCapitals(string text)
         {
-            string newText = string.Empty;
-            for (int i = 0; i < text.Length; i++)
+            var newText = string.Empty;
+            for (var i = 0; i < text.Length; i++)
             {
-                char currentChar = text[i];
-                char nextChar = char.MinValue;
-                char nextNextChar = char.MinValue;
+                var currentChar = text[i];
+                var nextChar = char.MinValue;
+                var nextNextChar = char.MinValue;
                 if (i + 1 < text.Length) nextChar = text[i + 1];
                 if (i + 2 < text.Length) nextNextChar = text[i + 2];
 
@@ -97,7 +92,7 @@ namespace Halloumi.Common.Helpers
 
             text = text.Substring(0, length).Trim();
 
-            int index = text.LastIndexOf(" ");
+            var index = text.LastIndexOf(" ");
             if (index > length / 2)
             {
                 text = text.Substring(0, index).Trim();
@@ -213,12 +208,12 @@ namespace Halloumi.Common.Helpers
             var n = source.Length;
 
             var distances = new int[m + 1, n + 1];
-            for (int i = 0; i <= m; i++) distances[i, 0] = i;
-            for (int j = 0; j <= n; j++) distances[0, j] = j;
+            for (var i = 0; i <= m; i++) distances[i, 0] = i;
+            for (var j = 0; j <= n; j++) distances[0, j] = j;
 
-            for (int i = 1; i <= m; i++)
+            for (var i = 1; i <= m; i++)
             {
-                for (int j = 1; j <= n; j++)
+                for (var j = 1; j <= n; j++)
                 {
                     var cost = destination[i - 1] == source[j - 1] ? 0 : 1;
                     var insertion = distances[i, j - 1] + 1;

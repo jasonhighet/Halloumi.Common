@@ -1,11 +1,5 @@
 using System;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.Data;
-using System.Drawing;
-using System.Text;
 using System.Windows.Forms;
-using ComponentFactory.Krypton.Toolkit;
 using Halloumi.Common.Windows.Components;
 
 namespace Halloumi.Common.Windows.Forms
@@ -68,14 +62,14 @@ namespace Halloumi.Common.Windows.Forms
             }
 
             // enable/disable ok button based on completion/cancelled state.
-            bool okVisible = (!_progressDialog.Cancelled && !_progressDialog.Processing);
+            var okVisible = (!_progressDialog.Cancelled && !_progressDialog.Processing);
             if (btnOK.Visible != okVisible)
             {
                 btnOK.Visible = okVisible;
             }
 
             // enable/disable cancel button based on completion/cancelled state.
-            bool cancelVisible = !okVisible;
+            var cancelVisible = !okVisible;
             if (btnCancel.Visible != cancelVisible)
             {
                 btnCancel.Visible = cancelVisible;
