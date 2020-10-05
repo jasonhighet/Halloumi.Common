@@ -263,13 +263,6 @@ namespace Halloumi.Common.Windows.Helpers
             var apetureMin = -(size / 2);
             var apetureMax = (size / 2);
 
-            Color medianColor;
-            Color currentColor;
-            var rValue = 0;
-            var gValue = 0;
-            var bValue = 0;
-            var pixelCount = 0;
-
             var medianFastBitmap = new BitmapAccessor(medianBitmap);
             var sourceFastBitmap = new BitmapAccessor(sourceBitmap);
 
@@ -277,30 +270,26 @@ namespace Halloumi.Common.Windows.Helpers
             {
                 for (var y = 0; y < medianBitmap.Height; y++)
                 {
-                    rValue = 0;
-                    gValue = 0;
-                    bValue = 0;
-                    pixelCount = 0;
+                    var rValue = 0;
+                    var gValue = 0;
+                    var bValue = 0;
+                    var pixelCount = 0;
 
                     for (var currentX = x + apetureMin; currentX < x + apetureMax; currentX++)
                     {
-                        if (currentX >= 0 && currentX < medianBitmap.Width)
+                        if (currentX < 0 || currentX >= medianBitmap.Width) continue;
+                        for (var currentY = y + apetureMin; currentY < y + apetureMax; currentY++)
                         {
-                            for (var currentY = y + apetureMin; currentY < y + apetureMax; currentY++)
-                            {
-                                if (currentY >= 0 && currentY < medianBitmap.Height)
-                                {
-                                    currentColor = sourceFastBitmap.GetPixel(currentX, currentY);
-                                    rValue += currentColor.R;
-                                    gValue += currentColor.G;
-                                    bValue += currentColor.B;
-                                    pixelCount++;
-                                }
-                            }
+                            if (currentY < 0 || currentY >= medianBitmap.Height) continue;
+                            var currentColor = sourceFastBitmap.GetPixel(currentX, currentY);
+                            rValue += currentColor.R;
+                            gValue += currentColor.G;
+                            bValue += currentColor.B;
+                            pixelCount++;
                         }
                     }
 
-                    medianColor = Color.FromArgb(rValue / pixelCount,
+                    var medianColor = Color.FromArgb(rValue / pixelCount,
                         gValue / pixelCount,
                         bValue / pixelCount);
 
@@ -395,25 +384,25 @@ namespace Halloumi.Common.Windows.Helpers
         public static Image DarkenImage(Image image, double darkenAmount)
         {
             var sourceBitmap = new Bitmap(image);
-            var darkenBitmap = new Bitmap(image.Width, image.Height);
+            var destBitmap = new Bitmap(image.Width, image.Height);
 
-            var darkenFastBitmap = new BitmapAccessor(darkenBitmap);
+            var destFastBitmap = new BitmapAccessor(destBitmap);
             var sourceFastBitmap = new BitmapAccessor(sourceBitmap);
 
-            for (var x = 0; x < darkenBitmap.Width; x++)
+            for (var x = 0; x < destBitmap.Width; x++)
             {
-                for (var y = 0; y < darkenBitmap.Height; y++)
+                for (var y = 0; y < destBitmap.Height; y++)
                 {
                     var color = sourceFastBitmap.GetPixel(x, y);
-                    darkenFastBitmap.SetPixel(x, y, DarkenColor(color, darkenAmount));
+                    destFastBitmap.SetPixel(x, y, DarkenColor(color, darkenAmount));
                 }
             }
 
-            darkenFastBitmap.Dispose();
+            destFastBitmap.Dispose();
             sourceFastBitmap.Dispose();
             sourceBitmap.Dispose();
 
-            return darkenBitmap;
+            return destBitmap;
         }
 
         public static Color DarkenColor(Color inColor, double darkenAmount)
@@ -454,7 +443,7 @@ namespace Halloumi.Common.Windows.Helpers
         /// <returns>The JPG image codec.</returns>
         private static ImageCodecInfo GetJPGCodec()
         {
-            return ImageCodecInfo.GetImageEncoders().Where(e => e.MimeType.ToLower() == "image/jpeg").FirstOrDefault();
+            return ImageCodecInfo.GetImageEncoders().FirstOrDefault(e => e.MimeType.ToLower() == "image/jpeg");
         }
 
         #endregion

@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Windows.Forms;
+using Halloumi.Common.Helpers;
 using Halloumi.Common.Windows.Helpers;
 
 namespace Halloumi.Common.Windows.Controls
