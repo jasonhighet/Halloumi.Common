@@ -78,6 +78,7 @@ namespace Halloumi.Common.Windows.Controls
         {
             var dialog = new FolderBrowserDialog();
             dialog.Description = this.Title;
+            dialog.RootFolder = Environment.SpecialFolder.MyComputer;
 
             if (Directory.Exists(this.SelectedFolder))
             {

@@ -1,4 +1,5 @@
-﻿using System.Windows.Forms;
+﻿using System;
+using System.Windows.Forms;
 
 namespace Halloumi.Common.Windows.Helpers
 {
@@ -9,6 +10,7 @@ namespace Halloumi.Common.Windows.Helpers
             var folder = "";
             var dialog = new FolderBrowserDialog();
             dialog.ShowNewFolderButton = true;
+            dialog.RootFolder = Environment.SpecialFolder.MyComputer;
             if (dialog.ShowDialog() == DialogResult.OK)
             {
                 folder = dialog.SelectedPath;

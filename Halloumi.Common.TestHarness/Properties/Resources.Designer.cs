@@ -8,7 +8,7 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 
-namespace Halloumi.Common.Windows.Properties {
+namespace Halloumi.Common.TestHarness.Properties {
     using System;
     
     
@@ -39,7 +39,7 @@ namespace Halloumi.Common.Windows.Properties {
         internal static global::System.Resources.ResourceManager ResourceManager {
             get {
                 if (object.ReferenceEquals(resourceMan, null)) {
-                    global::System.Resources.ResourceManager temp = new global::System.Resources.ResourceManager("Halloumi.Common.Windows.Properties.Resources", typeof(Resources).Assembly);
+                    global::System.Resources.ResourceManager temp = new global::System.Resources.ResourceManager("Halloumi.Common.TestHarness.Properties.Resources", typeof(Resources).Assembly);
                     resourceMan = temp;
                 }
                 return resourceMan;
@@ -57,26 +57,6 @@ namespace Halloumi.Common.Windows.Properties {
             }
             set {
                 resourceCulture = value;
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized resource of type System.Drawing.Bitmap.
-        /// </summary>
-        internal static System.Drawing.Bitmap Pinned {
-            get {
-                object obj = ResourceManager.GetObject("Pinned", resourceCulture);
-                return ((System.Drawing.Bitmap)(obj));
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized resource of type System.Drawing.Bitmap.
-        /// </summary>
-        internal static System.Drawing.Bitmap Unpinned {
-            get {
-                object obj = ResourceManager.GetObject("Unpinned", resourceCulture);
-                return ((System.Drawing.Bitmap)(obj));
             }
         }
     }

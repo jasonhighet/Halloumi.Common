@@ -8,7 +8,7 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 
-namespace Halloumi.Common.Windows.Properties {
+namespace Halloumi.Common.TestHarness.Properties {
     
     
     [global::System.Runtime.CompilerServices.CompilerGeneratedAttribute()]
